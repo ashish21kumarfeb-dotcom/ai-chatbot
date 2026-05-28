@@ -1,0 +1,58 @@
+<div class="upload-container">
+
+  <h2>AI Knowledge Base</h2>
+
+  <p>
+    Upload company documents
+  </p>
+
+  <!-- Upload -->
+  <label class="upload-box">
+
+    <input
+      type="file"
+      multiple
+      hidden
+      (change)="onFileSelected($event)"
+    />
+
+    <span>
+      Upload PDFs / Docs
+    </span>
+
+  </label>
+
+  <!-- File List -->
+  <div class="files-section">
+
+    <h3>
+      Uploaded Files
+    </h3>
+
+    @if(uploadedFiles.length === 0){
+
+      <p class="empty">
+        No files uploaded
+      </p>
+
+    }
+
+    @for(file of uploadedFiles; track $index){
+
+      <div class="file-item">
+
+        <span>
+          {{ file }}
+        </span>
+
+        <button (click)="deleteFile($index)">
+          Delete
+        </button>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

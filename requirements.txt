@@ -1,0 +1,41 @@
+# Backend API framework
+fastapi
+
+# Runs FastAPI server
+uvicorn
+
+# Main RAG framework
+langchain
+
+# LangChain community integrations
+langchain-community
+
+# ChromaDB integration
+langchain-chroma
+
+# Groq integration
+langchain-groq
+
+# Vector database
+chromadb
+
+# PDF processing
+pypdf
+
+# DOCX processing
+python-docx
+
+# Tokenizer utilities
+tiktoken
+
+# File upload support
+python-multipart
+
+# Environment variables
+python-dotenv
+
+# Local embeddings
+sentence-transformers
+
+#file upload k liye
+docx2txt

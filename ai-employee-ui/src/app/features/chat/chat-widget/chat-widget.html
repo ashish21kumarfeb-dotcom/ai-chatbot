@@ -1,0 +1,65 @@
+<button
+  class="chat-toggle"
+  (click)="toggleChat()"
+>
+  💬
+</button>
+
+@if (isOpen()) {
+
+<div class="chat-window">
+
+  <div class="chat-header">
+
+    <div>
+      AI Employee
+    </div>
+
+    <button (click)="toggleChat()">
+      ✕
+    </button>
+
+  </div>
+
+  <div class="chat-body">
+
+    @for (message of messages(); track $index) {
+
+    <div
+      class="message"
+      [class.user]="message.sender === 'user'"
+      [class.ai]="message.sender === 'ai'"
+    >
+      {{ message.text }}
+    </div>
+
+    }
+
+    @if (loading) {
+
+    <div class="message ai">
+      Thinking...
+    </div>
+
+    }
+
+  </div>
+
+  <div class="chat-footer">
+
+    <input
+      type="text"
+      [(ngModel)]="question"
+      placeholder="Ask something..."
+      (keyup.enter)="sendMessage()"
+    />
+
+    <button (click)="sendMessage()">
+      Send
+    </button>
+
+  </div>
+
+</div>
+
+}

@@ -1,0 +1,35 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  background: #0f172a;
+
+  font-family: Arial, sans-serif;
+}
+
+.layout {
+  display: flex;
+
+  height: 100vh;
+
+  background: #0f172a;
+}
+
+.sidebar {
+  width: 340px;
+
+  border-right: 1px solid #1e293b;
+
+  background: #111827;
+
+  padding: 20px;
+
+  overflow-y: auto;
+}
+
+.main-content {
+  flex: 1;
+
+  position: relative;
+}
