@@ -39,3 +39,6 @@ sentence-transformers
 
 #file upload k liye
 docx2txt
+
+#State management
+langgraph
