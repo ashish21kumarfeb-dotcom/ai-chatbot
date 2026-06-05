@@ -7,10 +7,9 @@ import { ApiService } from '../../../core/services/api';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './upload-page.html',
-  styleUrls: ['./upload-page.css']
+  styleUrls: ['./upload-page.css'],
 })
 export class UploadPage implements OnInit {
-
   private api = inject(ApiService);
 
   uploadedFiles: string[] = [];
@@ -18,21 +17,20 @@ export class UploadPage implements OnInit {
   ngOnInit(): void {
     this.loadFiles();
   }
-  
-constructor(private cdr: ChangeDetectorRef) {}
 
-loadFiles() {
-  this.api.getFiles().subscribe({
-    next: (files: any[]) => {
-      console.log('Before:', this.uploadedFiles);
-      this.uploadedFiles = [...files];
-      console.log('After:', this.uploadedFiles);
-      this.cdr.detectChanges();
-    }
-  });
-}
+  constructor(private cdr: ChangeDetectorRef) {}
+
+  loadFiles() {
+    this.api.getFiles().subscribe({
+      next: (files: any[]) => {
+        console.log('Before:', this.uploadedFiles);
+        this.uploadedFiles = [...files];
+        console.log('After:', this.uploadedFiles);
+        this.cdr.detectChanges();
+      },
+    });
+  }
   onFileSelected(event: Event): void {
-
     const input = event.target as HTMLInputElement;
 
     if (!input.files?.length) {
@@ -40,38 +38,30 @@ loadFiles() {
     }
 
     Array.from(input.files).forEach((file) => {
-
       this.api.uploadFile(file).subscribe({
         next: (response: any) => {
-
           console.log('FILES API RESPONSE', response);
 
           // If backend returns updated file list
           if (response.files) {
             this.uploadedFiles = response.files;
           } else {
-            this.uploadedFiles = [
-              ...this.uploadedFiles,
-              file.name
-            ];
+            this.uploadedFiles = [...this.uploadedFiles, file.name];
           }
         },
         error: (err) => {
           console.error('Upload failed', err);
-        }
+        },
       });
-
     });
 
     input.value = '';
   }
 
   deleteFile(index: number): void {
-
     const file = this.uploadedFiles[index];
 
-    this.uploadedFiles =
-      this.uploadedFiles.filter((_, i) => i !== index);
+    this.uploadedFiles = this.uploadedFiles.filter((_, i) => i !== index);
 
     this.api.deleteFile(file).subscribe({
       next: () => {
@@ -82,7 +72,7 @@ loadFiles() {
 
         // Reload if delete failed
         this.loadFiles();
-      }
+      },
     });
   }
 }

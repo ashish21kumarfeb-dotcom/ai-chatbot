@@ -1,27 +1,68 @@
-# Loader module for RAG
 import os
 
-from langchain_community.document_loaders import PyPDFLoader,Docx2txtLoader,TextLoader
+from langchain_community.document_loaders import (
+    PyPDFLoader,
+    Docx2txtLoader,
+    TextLoader,
+    CSVLoader,
+    UnstructuredExcelLoader,
+    UnstructuredPowerPointLoader,
+    JSONLoader,
+    UnstructuredHTMLLoader,
+    UnstructuredMarkdownLoader
+)
+
+from app.rag.file_manager import SUPPORTED_EXTENSIONS
+
+
+LOADERS = {
+    ".pdf": PyPDFLoader,
+    ".docx": Docx2txtLoader,
+    ".txt": lambda path: TextLoader(
+        path,
+        encoding="utf-8"
+    ),
+    ".csv": CSVLoader,
+    ".xlsx": UnstructuredExcelLoader,
+    ".pptx": UnstructuredPowerPointLoader,
+    ".json": lambda path: JSONLoader(
+        file_path=path,
+        jq_schema=".",
+        text_content=False
+    ),
+    ".html": UnstructuredHTMLLoader,
+    ".md": UnstructuredMarkdownLoader
+}
 
 
 def load_document(file_path: str):
-    if file_path.endswith(".pdf"):
-        loader = PyPDFLoader(file_path)
 
-    elif file_path.endswith(".docx"):
-        loader = Docx2txtLoader(file_path)
+    extension = os.path.splitext(
+        file_path
+    )[1].lower()
 
-    elif file_path.endswith(".txt"):
-        loader = TextLoader(file_path)
+    if extension not in SUPPORTED_EXTENSIONS:
 
-    else:
-        raise Exception("Unsupported file type")
+        raise Exception(
+            f"Unsupported file type: {extension}"
+        )
+
+    loader_class = LOADERS.get(extension)
+
+    if not loader_class:
+
+        raise Exception(
+            f"No loader configured for {extension}"
+        )
+
+    loader = loader_class(file_path)
 
     docs = loader.load()
 
     filename = os.path.basename(file_path)
 
     for doc in docs:
+
         doc.metadata["source"] = filename
-        
+
     return docs

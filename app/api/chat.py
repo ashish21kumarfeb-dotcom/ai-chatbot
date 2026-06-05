@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from app.rag.chatbot import ask_question
 from uuid import uuid4
 
-from app.rag.metadata_store import load_metadata
+
 router = APIRouter()
 
 
@@ -15,10 +15,6 @@ class ChatRequest(BaseModel):
     question: str
 
     session_id: Optional[str] = None
-
-@router.get("/files")
-def get_files():
-    return load_metadata()
 
 @router.post("/chat")
 async def chat(request: ChatRequest):

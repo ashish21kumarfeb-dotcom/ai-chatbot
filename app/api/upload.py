@@ -38,7 +38,6 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 async def get_uploaded_files():
 
     metadata = load_metadata()
-    print("FILES HIT:", load_metadata())
     return [
         item["filename"]
         for item in metadata
