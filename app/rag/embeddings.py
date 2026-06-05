@@ -1,9 +1,9 @@
-# from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings
 
-# embeddings = HuggingFaceEmbeddings(
-#     model_name="sentence-transformers/all-MiniLM-L6-v2"
-# )
+embeddings = HuggingFaceEmbeddings(
+    model_name="sentence-transformers/all-MiniLM-L6-v2"
+)
 
-from langchain_community.embeddings import FakeEmbeddings
+# from langchain_community.embeddings import FakeEmbeddings
 
-embeddings = FakeEmbeddings(size=384)
+# embeddings = FakeEmbeddings(size=384)

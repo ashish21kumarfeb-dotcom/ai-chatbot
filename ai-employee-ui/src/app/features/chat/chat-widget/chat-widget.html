@@ -21,7 +21,7 @@
 
   </div>
 
-  <div class="chat-body">
+  <div #chatBody class="chat-body">
 
     @for (message of messages(); track $index) {
 
@@ -54,9 +54,9 @@
       (keyup.enter)="sendMessage()"
     />
 
-    <button (click)="sendMessage()">
+    <button (click)="sendMessage()" [disabled]="loading">
       Send
-    </button>
+    </button>   
 
   </div>
 

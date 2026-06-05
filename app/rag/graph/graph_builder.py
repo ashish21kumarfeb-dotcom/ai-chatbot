@@ -7,13 +7,26 @@ from app.rag.graph.nodes import (
     router_node,
     retrieval_node,
     memory_node,
-    llm_node
+    llm_node,
+    metadata_node
+
 )
 from dotenv import load_dotenv
 
 load_dotenv()
 graph = StateGraph(GraphState)
 
+def route_query(state):
+
+    if state["query_type"] == "metadata":
+        return "metadata"
+
+    return "memory"
+
+graph.add_node(
+    "metadata",
+    metadata_node
+)
 graph.add_node(
     "router",
     router_node
@@ -36,9 +49,18 @@ graph.add_node(
 
 graph.set_entry_point("router")
 
-graph.add_edge(
+graph.add_conditional_edges(
     "router",
-    "memory"
+     route_query,
+    {
+        "metadata": "metadata",
+        "memory": "memory"
+    }
+)
+
+graph.add_edge(
+    "metadata",
+    END
 )
 
 graph.add_edge(

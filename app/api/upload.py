@@ -1,6 +1,6 @@
 import os
 import shutil
-
+import traceback
 from fastapi import (
     APIRouter,
     UploadFile,
@@ -10,7 +10,7 @@ from fastapi import (
 
 from app.rag.loader import load_document
 from app.rag.splitter import split_documents
-
+from app.rag.hybrid_search import rebuild_bm25_index
 from app.rag.metadata_store import (
     add_file_metadata,
     delete_file_metadata
@@ -20,6 +20,10 @@ from app.rag.vectorstore import (
     add_documents,
     delete_by_source
 )
+from app.rag.hybrid_search import (
+    rebuild_bm25_index
+)
+from app.rag.metadata_store import load_metadata
 
 router = APIRouter(
     prefix="/upload",
@@ -30,6 +34,15 @@ UPLOAD_DIR = "app/uploads"
 
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+@router.get("/files")
+async def get_uploaded_files():
+
+    metadata = load_metadata()
+    print("FILES HIT:", load_metadata())
+    return [
+        item["filename"]
+        for item in metadata
+    ]
 
 @router.post("/")
 async def upload_file(
@@ -74,8 +87,19 @@ async def upload_file(
         # Split into chunks
         chunks = split_documents(documents)
 
+        print("\n===== CHUNKS CREATED =====")
+        print("TOTAL CHUNKS:", len(chunks))
+
+        for chunk in chunks[:2]:
+
+            print(chunk.page_content[:300])
+            print(chunk.metadata)
+
         # Store embeddings
         add_documents(chunks)
+
+        # Rebuild BM25
+        rebuild_bm25_index()
 
         # Extract metadata
         file_extension = os.path.splitext(
@@ -100,6 +124,9 @@ async def upload_file(
         }
 
     except Exception as e:
+
+        print("\n===== FULL ERROR =====")
+        traceback.print_exc()
 
         # Rollback file if error occurs
         if os.path.exists(file_path):
@@ -137,6 +164,9 @@ async def delete_file(filename: str):
 
         # Delete metadata
         delete_file_metadata(filename)
+
+        # Rebuild hybrid BM25 index
+        rebuild_bm25_index()
 
         return {
             "message": f"{filename} deleted successfully"

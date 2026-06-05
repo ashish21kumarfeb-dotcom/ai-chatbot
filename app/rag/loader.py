@@ -1,4 +1,6 @@
 # Loader module for RAG
+import os
+
 from langchain_community.document_loaders import PyPDFLoader,Docx2txtLoader,TextLoader
 
 
@@ -15,4 +17,11 @@ def load_document(file_path: str):
     else:
         raise Exception("Unsupported file type")
 
-    return loader.load()
+    docs = loader.load()
+
+    filename = os.path.basename(file_path)
+
+    for doc in docs:
+        doc.metadata["source"] = filename
+        
+    return docs

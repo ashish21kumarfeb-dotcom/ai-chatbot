@@ -4,7 +4,7 @@ from langchain_groq import ChatGroq
 
 from app.rag.query_router import detect_query_type
 from app.rag.hybrid_search import hybrid_search
-
+from app.rag.metadata_store import load_metadata
 from app.rag.graph.memory import (
     build_chat_history,
     add_to_memory
@@ -29,37 +29,22 @@ def router_node(state):
 
     return state
 
+def metadata_node(state):
 
-# def retrieval_node(state):
+    metadata = load_metadata()
 
-#     docs = hybrid_search(
-#         state["question"]
-#     )
+    if not metadata:
+        state["answer"] = "No documents uploaded."
+        return state
 
-#     context_parts = []
+    docs = []
 
-#     sources = []
+    for item in metadata:
+        docs.append(item["filename"])
 
-#     for doc in docs:
+    state["answer"] = "\n".join(docs)
 
-#         source = os.path.basename(
-#             doc.metadata.get("source", "Unknown")
-#         )
-
-#         if source not in sources:
-#             sources.append(source)
-
-#         context_parts.append(
-#             doc.page_content
-#         )
-
-#     state["context"] = "\n\n".join(
-#         context_parts
-#     )
-
-#     state["sources"] = sources
-
-#     return state
+    return state
 
 def retrieval_node(state):
 
@@ -109,51 +94,6 @@ def memory_node(state):
     state["chat_history"] = history
 
     return state
-
-
-# def llm_node(state):
-
-#     prompt = f"""
-# You are a company knowledge assistant.
-
-# CHAT HISTORY:
-# {state["chat_history"]}
-
-# CONTEXT:
-# {state["context"]}
-
-# QUESTION:
-# {state["question"]}
-
-# Rules:
-# - Use only provided context
-# - Do not hallucinate
-# - Use chat history for follow-up questions
-# - If answer not found, say:
-# "I could not find this information in uploaded documents."
-
-# ANSWER:
-# """
-
-#     response = llm.invoke(prompt)
-
-#     answer = response.content.strip()
-
-#     state["answer"] = answer
-
-#     add_to_memory(
-#         state["session_id"],
-#         "user",
-#         state["question"]
-#     )
-
-#     add_to_memory(
-#         state["session_id"],
-#         "assistant",
-#         answer
-#     )
-
-#     return state
 
 def llm_node(state):
 

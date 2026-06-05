@@ -6,15 +6,26 @@ METADATA_FILE = "app/data/file_metadata.json"
 
 
 def load_metadata():
+
     if not os.path.exists(METADATA_FILE):
+
+        with open(METADATA_FILE, "w", encoding="utf-8") as f:
+            json.dump([], f)
+
         return []
 
-    with open(METADATA_FILE, "r") as f:
-        return json.load(f)
+    try:
+
+        with open(METADATA_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+
+    except json.JSONDecodeError:
+
+        return []
 
 
 def save_metadata(data):
-    with open(METADATA_FILE, "w") as f:
+    with open(METADATA_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4)
 
 

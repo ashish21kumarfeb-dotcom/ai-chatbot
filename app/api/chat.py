@@ -1,36 +1,12 @@
-# from fastapi import APIRouter
-# from pydantic import BaseModel
-
-# from app.rag.chatbot import ask_question
-
-
-# router = APIRouter()
-
-
-# class ChatRequest(BaseModel):
-#     question: str
-
-
-# @router.post("/chat")
-# async def chat(request: ChatRequest):
-
-#     response = ask_question(
-#         request.question
-#     )
-
-#     return {
-#         "question": request.question,
-#         "answer": response["answer"],
-#         "sources": response["sources"]
-#     }
-
 from typing import Optional
 
 from fastapi import APIRouter
 from pydantic import BaseModel
 
 from app.rag.chatbot import ask_question
+from uuid import uuid4
 
+from app.rag.metadata_store import load_metadata
 router = APIRouter()
 
 
@@ -38,19 +14,27 @@ class ChatRequest(BaseModel):
 
     question: str
 
-    session_id: Optional[str] = "default"
+    session_id: Optional[str] = None
 
+@router.get("/files")
+def get_files():
+    return load_metadata()
 
 @router.post("/chat")
 async def chat(request: ChatRequest):
-
+    if not request.session_id:
+        request.session_id = str(uuid4())
+    print(
+        f"Received request: question={request.question}, "
+        f"session_id={request.session_id}"
+    )
     response = ask_question(
 
         question=request.question,
 
         session_id=request.session_id
     )
-
+    
     return {
 
         "session_id": request.session_id,

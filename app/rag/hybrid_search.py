@@ -1,28 +1,98 @@
 from rank_bm25 import BM25Okapi
 from langchain_core.documents import Document
-from app.rag.vectorstore import vector_db, similarity_search
+
+from app.rag.vectorstore import (
+    vector_db,
+    similarity_search
+)
+
 import re
 
 
+bm25 = None
+bm25_documents = []
+tokenized_docs = []
+
+
 def tokenize(text: str):
+
     text = text.lower()
-    text = re.sub(r"[^\w\s]", "", text)
+
+    text = re.sub(
+        r"[^\w\s]",
+        "",
+        text
+    )
+
     return text.split()
 
 
-def bm25_search(query: str, k: int = 5):
+def rebuild_bm25_index():
+
+    global bm25
+    global bm25_documents
+    global tokenized_docs
 
     data = vector_db.get()
-    documents = data.get("documents", [])
-    metadatas = data.get("metadatas", [])
 
-    if not documents:
+    documents = data.get(
+        "documents",
+        []
+    )
+
+    metadatas = data.get(
+        "metadatas",
+        []
+    )
+
+    bm25_documents = []
+
+    tokenized_docs = []
+
+    for doc, metadata in zip(
+        documents,
+        metadatas
+    ):
+
+        bm25_documents.append(
+            Document(
+                page_content=doc,
+                metadata=metadata
+            )
+        )
+
+        tokenized_docs.append(
+            tokenize(doc)
+        )
+
+    if tokenized_docs:
+
+        bm25 = BM25Okapi(
+            tokenized_docs
+        )
+
+        print(
+            f"BM25 rebuilt with {len(documents)} chunks"
+        )
+
+    else:
+
+        bm25 = None
+
+        print("BM25 empty")
+
+
+def bm25_search(
+    query: str,
+    k: int = 5
+):
+
+    if not bm25:
         return []
 
-    tokenized_docs = [tokenize(doc) for doc in documents]
-    bm25 = BM25Okapi(tokenized_docs)
-
-    scores = bm25.get_scores(tokenize(query))
+    scores = bm25.get_scores(
+        tokenize(query)
+    )
 
     ranked = sorted(
         range(len(scores)),
@@ -30,32 +100,44 @@ def bm25_search(query: str, k: int = 5):
         reverse=True
     )[:k]
 
-    results = []
-
-    for idx in ranked:
-        results.append(Document(
-            page_content=documents[idx],
-            metadata=metadatas[idx]
-        ))
-
-    return results
+    return [
+        bm25_documents[i]
+        for i in ranked
+    ]
 
 
-def hybrid_search(query: str, k: int = 5):
+def hybrid_search(
+    query: str,
+    k: int = 5
+):
 
-    vector_docs = similarity_search(query)
-    bm25_docs = bm25_search(query)
+    vector_docs = similarity_search(
+        query,
+        k=k
+    )
+
+    bm25_docs = bm25_search(
+        query,
+        k=k
+    )
 
     combined = []
-    seen_sources = set()
+
+    seen = set()
 
     for doc in vector_docs + bm25_docs:
 
-        source = doc.metadata.get("source", "unknown")
-        source = source.split("\\")[-1]
+        key = (
+            doc.page_content[:100]
+        )
 
-        if source not in seen_sources:
-            seen_sources.add(source)
+        if key not in seen:
+
+            seen.add(key)
+
             combined.append(doc)
 
     return combined[:k]
+
+
+rebuild_bm25_index()

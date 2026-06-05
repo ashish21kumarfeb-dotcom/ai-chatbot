@@ -4,12 +4,11 @@ import re
 from langchain_chroma import Chroma
 from app.rag.embeddings import embeddings
 
-
 vector_db = Chroma(
+    collection_name="company_documents",
     persist_directory="app/vectorstore",
     embedding_function=embeddings,
 )
-
 
 def normalize_query(text: str) -> str:
     text = text.lower().strip()
@@ -19,12 +18,38 @@ def normalize_query(text: str) -> str:
 
     return text
 
-
 def add_documents(chunks):
+
+    for chunk in chunks:
+
+        source = chunk.metadata.get(
+            "source",
+            ""
+        )
+
+        chunk.metadata["source"] = (
+            os.path.basename(source)
+        )
+
+    print("\n===== BEFORE INSERT =====")
+
+    print("Chunks:", len(chunks))
+
     vector_db.add_documents(chunks)
 
-    print(f"Added {len(chunks)} chunks.")
+    print("\n===== AFTER INSERT =====")
 
+    data = vector_db.get()
+
+    print("TOTAL DOCS:", len(data["documents"]))
+
+    print("TOTAL IDS:", len(data["ids"]))
+
+    print("LAST METADATA:")
+
+    for meta in data["metadatas"][-3:]:
+
+        print(meta)
 
 def similarity_search(query: str, k: int = 5):
     clean_query = normalize_query(query)
@@ -45,7 +70,7 @@ def similarity_search(query: str, k: int = 5):
         print("\n------------------\n")
 
         docs.append(doc)
-
+        print(docs)
     return docs
 
 
@@ -86,8 +111,17 @@ def delete_by_source(filename: str):
 
 
 def cleanup_vectorstore(uploads_dir="app/uploads"):
-    current_files = set(os.listdir(uploads_dir))
+    current_files = {
 
+    f for f in os.listdir(uploads_dir)
+
+    if os.path.isfile(
+        os.path.join(
+            uploads_dir,
+            f
+        )
+    )
+}
     data = vector_db.get()
 
     stale_ids = []

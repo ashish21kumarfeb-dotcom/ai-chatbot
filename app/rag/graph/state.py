@@ -1,11 +1,11 @@
-from typing import TypedDict, List
+from typing import TypedDict, List,Dict,Any
 
 
 class GraphState(TypedDict):
 
     question: str
 
-    query_type: str
+    query_type: Dict[str, Any]
 
     context: str
 
