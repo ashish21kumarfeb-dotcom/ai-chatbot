@@ -1,6 +1,7 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../../../core/services/api';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-upload-page',
@@ -21,6 +22,7 @@ export class UploadPage implements OnInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   loadFiles() {
+    console.log('Loading files...');
     this.api.getFiles().subscribe({
       next: (files: any[]) => {
         console.log('Before:', this.uploadedFiles);
@@ -36,25 +38,14 @@ export class UploadPage implements OnInit {
     if (!input.files?.length) {
       return;
     }
-
-    Array.from(input.files).forEach((file) => {
-      this.api.uploadFile(file).subscribe({
-        next: (response: any) => {
-          console.log('FILES API RESPONSE', response);
-
-          // If backend returns updated file list
-          if (response.files) {
-            this.uploadedFiles = response.files;
-          } else {
-            this.uploadedFiles = [...this.uploadedFiles, file.name];
-          }
-        },
-        error: (err) => {
-          console.error('Upload failed', err);
-        },
-      });
+    forkJoin(Array.from(input.files).map(file =>
+      this.api.uploadFile(file)
+    )).subscribe({
+      next:()=>{ this.loadFiles()},
+      error:(err)=>{ console.error('Upload failed', err)}
     });
-
+    
+  
     input.value = '';
   }
 

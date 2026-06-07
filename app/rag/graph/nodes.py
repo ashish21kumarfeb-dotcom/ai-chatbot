@@ -39,11 +39,31 @@ def router_node(state):
 
     return state
 
+
 def greeting_node(state):
 
-    state["answer"] = (
-        "Hello! How can I help you today?"
-    )
+    prompt = f"""
+You are a friendly AI assistant.
+
+Conversation History:
+{state.get("chat_history", "")}
+
+User:
+{state["question"]}
+
+Rules:
+- Reply naturally.
+- Keep response under 25 words.
+- Be conversational.
+- If user says they are good, respond positively.
+- If user asks how are you, answer briefly.
+- Do not mention documents.
+- Do not mention uploaded files.
+"""
+
+    response = llm.invoke(prompt)
+
+    state["answer"] = response.content.strip()
 
     return state
 

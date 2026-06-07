@@ -14,7 +14,12 @@ METADATA_KEYWORDS = [
     "list files",
     "list documents",
     "show files",
-    "show documents"
+    "show documents",
+    "list all files",
+    "list all documents",   
+    "list all uploaded files",
+    "list all uploaded documents",
+    "list all docs"
 ]
 
 GREETINGS = {
@@ -24,8 +29,19 @@ GREETINGS = {
     "good morning",
     "good afternoon",
     "good evening",
-    "hii",
-    "yo"
+    "how are you",
+    "i am good",
+    "im good",
+    "it was good",
+    "good",
+    "great",
+    "how are you doing",
+    "how are you",
+    "thanks",
+    "thank you",
+    "bye",
+    "good night",
+    "okay"
 }
 
 

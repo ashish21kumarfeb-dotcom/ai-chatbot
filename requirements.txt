@@ -43,3 +43,5 @@ docx2txt
 #State management
 langgraph
 
+#emmbeddings
+langchain-huggingface
