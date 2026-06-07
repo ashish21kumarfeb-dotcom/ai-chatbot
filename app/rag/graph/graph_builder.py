@@ -12,7 +12,6 @@ from app.rag.graph.nodes import (
     metadata_node,
 )
 from dotenv import load_dotenv
-from app.rag.intent_classifier import classify_intent
 
 load_dotenv()
 graph = StateGraph(GraphState)
@@ -49,10 +48,8 @@ graph.add_conditional_edges(
         "memory": "memory"
     }
 )
-graph.add_edge(
-    "greeting",
-    END
-)
+graph.add_edge("greeting",END)
+
 graph.add_edge("metadata", END)
 
 graph.add_edge("memory", "retrieval")

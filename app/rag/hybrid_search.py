@@ -8,8 +8,10 @@ import re
 bm25 = None
 bm25_documents = []
 tokenized_docs = []
-
-
+VECTOR_K = 10
+BM25_K = 10
+FINAL_K = 5
+SIMILARITY_THRESHOLD = 1.6
 def tokenize(text: str):
 
     text = text.lower()
@@ -54,7 +56,7 @@ def rebuild_bm25_index():
         print("BM25 empty")
 
 
-def bm25_search(query: str, k: int = 5):
+def bm25_search(query: str, k: int =BM25_K):
 
     if not bm25:
         return []
@@ -66,11 +68,11 @@ def bm25_search(query: str, k: int = 5):
     return [bm25_documents[i] for i in ranked]
 
 
-def hybrid_search(query: str, k: int = 5):
+def hybrid_search(query: str, k: int = FINAL_K):
 
-    vector_docs = similarity_search(query, k=10)
+    vector_docs = similarity_search(query,  k=VECTOR_K)
 
-    bm25_docs = bm25_search(query, k=10)
+    bm25_docs = bm25_search(query, k=BM25_K)
 
     combined = []
 
@@ -96,7 +98,7 @@ def hybrid_search(query: str, k: int = 5):
 
         print("-------------")
 
-    return combined[:k]
+    return combined[:FINAL_K]
 
 
 rebuild_bm25_index()

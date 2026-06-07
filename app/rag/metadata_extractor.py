@@ -2,26 +2,16 @@ import json
 
 from langchain_groq import ChatGroq
 from dotenv import load_dotenv
+
 load_dotenv()
-llm = ChatGroq(
-    model="llama-3.1-8b-instant",
-    temperature=0
-)
+llm = ChatGroq(model="llama-3.1-8b-instant", temperature=0)
 
 
-def extract_metadata(
-    documents,
-    classification
-):
+def extract_metadata(documents, classification):
 
-    document_type = classification.get(
-        "document_type",
-        "other"
-    )
+    document_type = classification.get("document_type", "other")
 
-    sample_text = "\n".join(
-        [doc.page_content for doc in documents[:3]]
-    )
+    sample_text = "\n".join([doc.page_content for doc in documents[:3]])
 
     if document_type == "resume":
 
@@ -42,12 +32,7 @@ Document:
 {sample_text}
 """
 
-    elif document_type in [
-        "handbook",
-        "policy",
-        "faq",
-        "knowledge_base"
-    ]:
+    elif document_type in ["handbook", "policy", "faq", "knowledge_base"]:
 
         prompt = f"""
 Extract company name.
@@ -74,9 +59,7 @@ Document:
 
     try:
 
-        return json.loads(
-            response.content
-        )
+        return json.loads(response.content)
 
     except:
 
