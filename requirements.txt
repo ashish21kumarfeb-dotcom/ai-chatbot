@@ -45,3 +45,6 @@ langgraph
 
 #emmbeddings
 langchain-huggingface
+
+#Keyw
+rank-bm25

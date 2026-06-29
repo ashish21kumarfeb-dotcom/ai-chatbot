@@ -1,23 +1,376 @@
 [
     {
+        "document_id": "07a319f9-07c9-4c0d-b952-6962004a32fe",
+        "filename": "Nitish_Kumar_Gupta_CV.pdf",
+        "file_type": ".pdf",
+        "size": 53411,
+        "chunks": 4,
+        "document_type": "resume",
+        "classification": {
+            "document_type": "resume",
+            "confidence": 1.0,
+            "reason": "contains education, experience, and skills information",
+            "method": "llm"
+        },
+        "universal_metadata": {
+            "title": "Nitish Kumar Gupta",
+            "summary": "Full Stack Developer with over 3 years of experience in .NET backend development and hands-on knowledge of Angular. Skilled in building scalable web applications using .NET Core, Web API, SQL Server, and creating responsive UIs with modern front-end frameworks.",
+            "language": "English",
+            "keywords": [
+                "Full Stack Developer",
+                "DotNet Developer",
+                "Angular",
+                ".NET Core"
+            ],
+            "topics": [
+                "resume",
+                "experience",
+                "skills"
+            ],
+            "entities": {
+                "people": [
+                    "Nitish Kumar Gupta",
+                    "Madan Mohan Malviya"
+                ],
+                "organizations": [
+                    "Bytecode Technology Pvt. Ltd.",
+                    "Nippon Data System Ltd.",
+                    "University Of Technology"
+                ],
+                "locations": [
+                    "Pune",
+                    "India",
+                    "Mohali",
+                    "Chandigarh",
+                    "Noida"
+                ],
+                "dates": [
+                    "2019",
+                    "2021",
+                    "2022",
+                    "2023",
+                    "2025"
+                ],
+                "emails": [
+                    "nitisgupta74@gmail.com"
+                ],
+                "phone_numbers": [
+                    "+919140676355",
+                    "2023 - 08",
+                    "2022 - 04"
+                ],
+                "urls": [
+                    "linkedin.com/in/nitish-gupta-"
+                ]
+            },
+            "key_facts": [
+                {
+                    "fact": "3 years of experience in .NET backend development",
+                    "category": "experience",
+                    "value": "3",
+                    "unit": "years"
+                },
+                {
+                    "fact": "Gate Qualified (2019)",
+                    "category": "experience",
+                    "value": "2019",
+                    "unit": "date"
+                },
+                {
+                    "fact": "UGC-NET Qualified (2021)",
+                    "category": "experience",
+                    "value": "2021",
+                    "unit": "date"
+                },
+                {
+                    "fact": "M.Tech in Computer Science Engineering",
+                    "category": "education",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "Hindi: First Language",
+                    "category": "language",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "English: B2 Upper Intermediate",
+                    "category": "language",
+                    "value": "",
+                    "unit": ""
+                }
+            ],
+            "document_type": "resume"
+        },
+        "uploaded_at": "2026-06-23T13:54:26.600233",
+        "metadata_updated_at": "2026-06-23T13:54:26.600233"
+    },
+    {
+        "document_id": "80888375-cd53-48a2-8753-ed1405d1dd46",
         "filename": "Acme Corp Employee Handbook.pdf",
         "file_type": ".pdf",
         "size": 22293,
         "chunks": 3,
-        "uploaded_at": "2026-06-01T19:14:52.746622"
+        "document_type": "company_policy",
+        "classification": {
+            "document_type": "company_policy",
+            "confidence": 0.8500000000000001,
+            "reason": "Rule-based matches: policy, leave policy, remote work",
+            "method": "rules"
+        },
+        "universal_metadata": {
+            "title": "Acme Corp Employee Handbook",
+            "summary": "Acme Corp is a software and AI solutions company that provides AI-powered customer support systems. The employee handbook outlines company policies, including refund, leave, and support ticket policies.",
+            "language": "English",
+            "keywords": [
+                "Acme Corp",
+                "employee handbook",
+                "company policy"
+            ],
+            "topics": [
+                "company policy",
+                "employee benefits",
+                "customer support"
+            ],
+            "entities": {
+                "people": [],
+                "organizations": [
+                    "Acme Corp"
+                ],
+                "locations": [
+                    "New York",
+                    "USA"
+                ],
+                "dates": [
+                    "2020",
+                    "14 days",
+                    "30 minutes"
+                ],
+                "emails": [
+                    "support@acmecorp.com"
+                ],
+                "phone_numbers": [],
+                "urls": []
+            },
+            "key_facts": [
+                {
+                    "fact": "Acme Corp is a software and AI solutions company founded in 2020.",
+                    "category": "general",
+                    "value": "2020",
+                    "unit": "year"
+                },
+                {
+                    "fact": "Customers can request a refund within 14 days of purchase.",
+                    "category": "policy_rule",
+                    "value": "14 days",
+                    "unit": "days"
+                },
+                {
+                    "fact": "Refunds are eligible only if the subscription was purchased directly from Acme Corp.",
+                    "category": "policy_rule",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "Refunds are eligible only if the customer has not exceeded 100 AI queries.",
+                    "category": "policy_rule",
+                    "value": "100",
+                    "unit": "queries"
+                },
+                {
+                    "fact": "Refunds are eligible only if the request is submitted through official support channels.",
+                    "category": "policy_rule",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "Refund processing time is 5–7 business days.",
+                    "category": "policy_rule",
+                    "value": "5–7 business days",
+                    "unit": "days"
+                },
+                {
+                    "fact": "Users can reset their password by opening the login page, clicking 'Forgot Password', entering their registered email, and following the reset link sent to email.",
+                    "category": "general",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "Password reset links expire after 30 minutes.",
+                    "category": "general",
+                    "value": "30 minutes",
+                    "unit": "minutes"
+                },
+                {
+                    "fact": "Employees are entitled to 12 paid casual leaves annually.",
+                    "category": "experience",
+                    "value": "12",
+                    "unit": "leaves"
+                },
+                {
+                    "fact": "Employees are entitled to 10 sick leaves annually.",
+                    "category": "experience",
+                    "value": "10",
+                    "unit": "leaves"
+                },
+                {
+                    "fact": "Remote work is allowed twice a week.",
+                    "category": "experience",
+                    "value": "twice a week",
+                    "unit": ""
+                },
+                {
+                    "fact": "The AI Employee assistant can answer company policy questions.",
+                    "category": "general",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "The AI Employee assistant can help customers reset passwords.",
+                    "category": "general",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "The AI Employee assistant can explain refund procedures.",
+                    "category": "general",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "The AI Employee assistant can provide business hours.",
+                    "category": "general",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "The AI Employee assistant can route support tickets.",
+                    "category": "general",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "The AI Employee assistant can search uploaded documents.",
+                    "category": "general",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "The AI assistant is powered by GPT-4o and Retrieval-Augmented Generation (RAG).",
+                    "category": "general",
+                    "value": "",
+                    "unit": ""
+                }
+            ],
+            "document_type": "company_policy"
+        },
+        "uploaded_at": "2026-06-23T13:54:28.192204",
+        "metadata_updated_at": "2026-06-23T13:54:28.192204"
     },
     {
-        "filename": "CURRENT IMPLEMENTATION.txt",
-        "file_type": ".txt",
-        "size": 6288,
-        "chunks": 9,
-        "uploaded_at": "2026-06-02T11:48:05.696698"
-    },
-    {
+        "document_id": "d8383979-cc9a-42c1-89c0-3be2513f8b60",
         "filename": "Brijesh_Jamloki_OnePage.pdf",
         "file_type": ".pdf",
         "size": 64887,
         "chunks": 5,
-        "uploaded_at": "2026-06-02T15:47:13.396387"
+        "document_type": "resume",
+        "classification": {
+            "document_type": "resume",
+            "confidence": 0.75,
+            "reason": "Rule-based matches: education, projects",
+            "method": "rules"
+        },
+        "universal_metadata": {
+            "title": "Brijesh Jamloki",
+            "summary": "Full Stack .NET Developer with 4.5+ years of experience building scalable web applications and RESTful APIs using ASP.NET Core, C#, Angular, and SQL Server.",
+            "language": "English",
+            "keywords": [
+                "Full Stack .NET Developer",
+                "ASP.NET Core",
+                "C#",
+                "Angular",
+                "SQL Server"
+            ],
+            "topics": [
+                "Software Development",
+                "Web Development",
+                "Database Management"
+            ],
+            "entities": {
+                "people": [
+                    "Brijesh Jamloki"
+                ],
+                "organizations": [
+                    "Bytecode Technologies Pvt Ltd",
+                    "Stellar Data Solutions Pvt. Ltd"
+                ],
+                "locations": [
+                    "Mohali",
+                    "Chandigarh"
+                ],
+                "dates": [
+                    "Jan 2026 – Present",
+                    "Jul 2022 – Present",
+                    "Jul 2021 – Jun 2022"
+                ],
+                "emails": [
+                    "brijeshj1084@gmail.com"
+                ],
+                "phone_numbers": [
+                    "+91-7404308090"
+                ],
+                "urls": [
+                    "linkedin.com/in/brijeshjamloki"
+                ]
+            },
+            "key_facts": [
+                {
+                    "fact": "4.5+ years of experience in building scalable web applications and RESTful APIs",
+                    "category": "experience",
+                    "value": "4.5+",
+                    "unit": "years"
+                },
+                {
+                    "fact": "Proven expertise in full-stack development, T-SQL performance optimization, and delivering high-quality, maintainable code",
+                    "category": "general",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "Improved performance by writing efficient T-SQL queries, stored procedures, and indexing strategies — reducing average query execution time by ~35% in key modules",
+                    "category": "experience",
+                    "value": "35%",
+                    "unit": "percent"
+                },
+                {
+                    "fact": "Developed and maintained .NET Facilities — a service management system with Web, Mobile, and Web API modules for contractor and job-site operations",
+                    "category": "experience",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "Designed and improved RESTful APIs using ASP.NET Core Web API, following SOLID principles and MVC architecture",
+                    "category": "experience",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "Built MVP with real-time location-based tracking, developed dashboard components and improved responsive design for cross-device usability",
+                    "category": "experience",
+                    "value": "",
+                    "unit": ""
+                },
+                {
+                    "fact": "Upgraded application to the latest Angular version, resolved UI bugs, and enhanced interface consistency and user experience",
+                    "category": "experience",
+                    "value": "",
+                    "unit": ""
+                }
+            ],
+            "document_type": "resume"
+        },
+        "uploaded_at": "2026-06-23T13:54:29.380054",
+        "metadata_updated_at": "2026-06-23T13:54:29.380054"
     }
 ]

@@ -31,5 +31,17 @@
     "tailwindcss": "^4.1.12",
     "typescript": "~5.9.2",
     "vitest": "^4.0.8"
-  }
+  },
+  "description": "This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.13.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashish21kumarfeb-dotcom/ai-chatbot.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashish21kumarfeb-dotcom/ai-chatbot/issues"
+  },
+  "homepage": "https://github.com/ashish21kumarfeb-dotcom/ai-chatbot#readme"
 }

@@ -5,6 +5,9 @@ from app.api.upload import router as upload_router
 from app.api.chat import router as chat_router
 from app.rag.vectorstore import cleanup_vectorstore
 from app.rag.hybrid_search import rebuild_bm25_index
+from dotenv import load_dotenv
+
+load_dotenv()
 app = FastAPI(title="Company AI Chatbot")
 
 # CORS

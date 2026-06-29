@@ -2,6 +2,7 @@ import os
 import json
 from datetime import datetime
 import uuid
+from typing import Any, Dict, Optional
 
 METADATA_FILE = "app/data/file_metadata.json"
 
@@ -36,25 +37,49 @@ def save_metadata(data):
         json.dump(data, f, indent=4, ensure_ascii=False)
 
 
-def add_file_metadata(document_id: uuid.UUID, filename: str, file_type: str, size: int, chunks: int):
+def add_file_metadata(
+    document_id: uuid.UUID,
+    filename: str,
+    file_type: str,
+    size: int,
+    chunks: int,
+    classification: Optional[Dict[str, Any]] = None,
+    universal_metadata: Optional[Dict[str, Any]] = None,
+):
 
     metadata = load_metadata()
+
+    classification = classification or {"document_type": "other", "confidence": 0.0}
+    universal_metadata = universal_metadata or {}
+
+    existing_item = None
 
     for item in metadata:
 
         if item["filename"].lower() == filename.lower():
-            return
+            existing_item = item
+            break
 
-    metadata.append(
-        {
-            "document_id": document_id,
-            "filename": filename,
-            "file_type": file_type,
-            "size": size,
-            "chunks": chunks,
-            "uploaded_at": datetime.now().isoformat(),
-        }
-    )
+    now = datetime.now().isoformat()
+
+    new_item = {
+        "document_id": str(document_id),
+        "filename": filename,
+        "file_type": file_type,
+        "size": size,
+        "chunks": chunks,
+        "document_type": classification.get("document_type", "other"),
+        "classification": classification,
+        "universal_metadata": universal_metadata,
+        "uploaded_at": existing_item.get("uploaded_at", now) if existing_item else now,
+        "metadata_updated_at": now,
+    }
+
+    if existing_item:
+        existing_item.clear()
+        existing_item.update(new_item)
+    else:
+        metadata.append(new_item)
 
     save_metadata(metadata)
 
@@ -78,10 +103,17 @@ def get_document_count():
     return len(load_metadata())
 
 
-def get_documents_by_type(file_type: str):
+def get_documents_by_type(document_type: str):
 
     return [
         item
         for item in load_metadata()
-        if item["file_type"].lower() == file_type.lower()
+        if item.get("document_type", "").lower() == document_type.lower()
     ]
+
+
+def get_document_by_filename(filename: str):
+    for item in load_metadata():
+        if item["filename"].lower() == filename.lower():
+            return item
+    return None
